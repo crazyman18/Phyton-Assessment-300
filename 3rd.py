@@ -14,18 +14,18 @@ def update_balance():
 
   if comics == "Super Dude":
       Super_Dude += amount.get()
-    else:
-        Super_Dude -= amount.get()
+  else:
+      Super_Dude = amount.get()
 
-    elif account == "Lizard Man":
+  if comics == "Lizard Man":
       Lizard_Man += amount.get()
-    else:
-      Lizard_Man -= amount.get()
+  else:
+      Lizard_Man = amount.get()
       
-    elif account == "Water Woman":
+  if comics == "Water Woman":
       Water_Woman += amount.get()
-    else:
-      Water_Woman -= amount.get()
+  else:
+      Water_Woman = amount.get()
   
   total_balance = Super_Dude + Lizard_Man + Water_Woman
   balance_string = "Super Dude: {}\nLizard Man: {}\nWater Woman: {}\nTotal Comic Sold: {}".format(Super_Dude, Lizard_Man, Water_Woman, total_balance)
@@ -35,6 +35,7 @@ def update_balance():
 #Title of the program
 root = Tk()
 root.title("Weeb Comics Store")
+root.configure(bg='skyblue')
 
 # Create the PhotoImage and label to hold it
 comic_image = PhotoImage(file="/Students/samuel.hermoso/Desktop/Phyton term 3/unnamed2.png")
@@ -106,7 +107,7 @@ amount_entry = ttk.Entry(bottom_frame, textvariable=amount)
 amount_entry.grid(row=5, column=1, padx=10, pady=3, sticky="WE")
 
 # Create a submit button
-submit_button = ttk.Button(bottom_frame, text="Submit", command=update_balance)
+submit_button = ttk.Button(bottom_frame, text="ReStock", command=update_balance)
 submit_button.grid(row=6, column=0, columnspan=2, padx=10, pady=10)
 
 # Run the mainloop
