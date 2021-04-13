@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from functools import partial
+import tkinter.messagebox
 
 # Create a variable to store the comic balance
 Super_Dude = 8
@@ -13,34 +14,28 @@ def update_balance():
   comics = chosen_comics.get()
 
   if comics == "Super Dude":
-      Super_Dude += amount.get()
+      Super_Dude += int(amount.get())
+  elif comics == "Lizard Man":
+      Lizard_Man += int(amount.get())
+  elif comics == "Water Woman":
+      Water_Woman += int(amount.get())
   else:
-      Super_Dude = amount.get()
-
-  if comics == "Lizard Man":
-      Lizard_Man += amount.get()
-  else:
-      Lizard_Man = amount.get()
-      
-  if comics == "Water Woman":
-      Water_Woman += amount.get()
-  else:
-      Water_Woman = amount.get()
+      pass
   
   total_balance = Super_Dude + Lizard_Man + Water_Woman
-  balance_string = "Super Dude: {}\nLizard Man: {}\nWater Woman: {}\nTotal Comic Sold: {}".format(Super_Dude, Lizard_Man, Water_Woman, total_balance)
+  balance_string = "Super Dude: {}\nLizard Man: {}\nWater Woman: {}\nTotal In Stock: {}".format(Super_Dude, Lizard_Man, Water_Woman, total_balance)
   Comic_details.set(balance_string)
   amount.set("")
 
 #Title of the program
 root = Tk()
 root.title("Weeb Comics Store")
-root.configure(bg='skyblue')
+root.configure(bg='black')
 
 # Create the PhotoImage and label to hold it
 comic_image = PhotoImage(file="/Students/samuel.hermoso/Desktop/Phyton term 3/unnamed2.png")
 comicimage_label = ttk.Label(root, image=comic_image)
-comicimage_label.grid(row=0, column=0, columnspan=2, padx=10, pady=10)
+comicimage_label.grid(row=0, column=0, columnspan=2, padx=5, pady=5)
 
 # Create the top frame
 top_frame = ttk.LabelFrame(root, text="Weeb Comics Store")
@@ -56,13 +51,17 @@ message_label.grid(row=0, column=1, padx=10, pady=10)
 
 # Create the Names of the Books
 Comic_details = StringVar()
-Comic_details.set("Super Dude: 8 \nLizard Man: 12\nWater Woman: 3\nTotal Comic Sold: 0")
+Comic_details.set("Super Dude: 8 \nLizard Man: 12\nWater Woman: 3\nTotal In Stock: 23")
 details_label = ttk.Label(top_frame, textvariable=Comic_details, justify="center")
-details_label.grid(row=2, column=2, columnspan=2, padx=10, pady=10)
+details_label.grid(row=2, column=0, columnspan=2, padx=10, pady=10)
 
 # Create a label for the account combobox
 account_label = ttk.Label(top_frame, text="Stock Levels")
-account_label.grid(row=1, column=2, padx=10, pady=3)
+account_label.grid(row=1, column=1, padx=10, pady=3)
+
+# Create the middle frame
+middle_frame = ttk.LabelFrame(root, text="Weeb Comics Store")
+middle_frame.grid(row=2, column=0, padx=10, pady=10, sticky="NSEW")
 
 # Set up a variable and option list for the account Combobox
 account_names = ["Super Dude", "Lizard Man", "Water Woman"]
@@ -70,13 +69,13 @@ chosen_account = StringVar()
 chosen_account.set(account_names[0])
 
 # Create a Combobox to select the account
-account_box = ttk.Combobox(top_frame, textvariable=chosen_account, state="readonly")
+account_box = ttk.Combobox(middle_frame, textvariable=chosen_account, state="readonly")
 account_box['values'] = account_names
 account_box.grid(row=2, column=1, padx=10, sticky="WE")
 
 # Create the bottom frame
 bottom_frame = ttk.LabelFrame(root)
-bottom_frame.grid(row=2, column=0, padx=10, pady=10, sticky="NSEW")
+bottom_frame.grid(row=3, column=0, padx=10, pady=10, sticky="NSEW")
 
 #Title of the second frame
 Restock_text = StringVar()
