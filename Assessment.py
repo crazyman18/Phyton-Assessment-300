@@ -52,6 +52,10 @@ def sell_comic():
   balance_string = "Super Dude: {}\nLizard Man: {}\nWater Woman: {}\nTotal In Stock: {}".format(Super_Dude, Lizard_Man, Water_Woman, total_balance)
   Comic_details.set(balance_string)
 
+def popupmsg(msg):
+  popup = tk.Tk()
+  
+
 #Title of the program
 root = Tk()
 root.title("Weeb Comics Store")
@@ -63,16 +67,8 @@ comicimage_label = ttk.Label(root, image=comic_image)
 comicimage_label.grid(row=0, column=0, columnspan=2, padx=5, pady=5)
 
 # Create the top frame
-top_frame = ttk.LabelFrame(root, text="Weeb Comics Store")
+top_frame = ttk.LabelFrame(root, text="STOCK LEVELS")
 top_frame.grid(row=1, column=0, padx=10, pady=10, sticky="NSEW")
-
-# Create and set the message text variable
-message_text = StringVar()
-message_text.set("WEEB COMIC SELECTION")
-
-# Create and pack the message label
-message_label = ttk.Label(top_frame, textvariable=message_text, wraplength="300", justify="center")
-message_label.grid(row=0, column=1, padx=10, pady=10)
 
 # Create the Names of the Books
 Comic_details = StringVar()
@@ -80,19 +76,17 @@ Comic_details.set("Super Dude: 8 \nLizard Man: 12\nWater Woman: 3\nTotal In Stoc
 details_label = ttk.Label(top_frame, textvariable=Comic_details, justify="center")
 details_label.grid(row=2, column=0, columnspan=2, padx=10, pady=10)
 
-# Create a label for the account combobox
-account_label = ttk.Label(top_frame, text="Stock Levels")
-account_label.grid(row=1, column=1, padx=10, pady=3)
+# Create and set the message text variable
+message_text = StringVar()
+message_text.set("")
+
+# Create and pack the message label
+message_label = ttk.Label(top_frame, textvariable=message_text, wraplength="300", justify="center")
+message_label.grid(row=2, column=1, padx=10, pady=10)
 
 # Create the middle frame
-middle_frame = ttk.LabelFrame(root)
+middle_frame = ttk.LabelFrame(root, text="SELLING SECTION")
 middle_frame.grid(row=2, column=0, padx=10, pady=10, sticky="NSEW")
-
-#Title of the second frame
-Restock_text2 = StringVar()
-Restock_text2.set("SELLING SECTION")
-Restock_label = ttk.Label(middle_frame, textvariable=Restock_text2, wraplength="300", justify="center")
-Restock_label.grid(row=0, column=1, padx=10, pady=10)
 
 # Set up a variable and option list for the account Combobox
 account_names = ["Super Dude", "Lizard Man", "Water Woman"]
@@ -109,14 +103,8 @@ sell_button = ttk.Button(middle_frame, text="Sell", command=sell_comic)
 sell_button.grid(row=6, column=0, columnspan=2, padx=10, pady=10)
 
 # Create the bottom frame
-bottom_frame = ttk.LabelFrame(root)
+bottom_frame = ttk.LabelFrame(root, text="RESTOCK SECTION")
 bottom_frame.grid(row=3, column=0, padx=10, pady=10, sticky="NSEW")
-
-#Title of the third frame
-Restock_text = StringVar()
-Restock_text.set("RESTOCK SECTION")
-Restock_label = ttk.Label(bottom_frame, textvariable=Restock_text, wraplength="300", justify="center")
-Restock_label.grid(row=0, column=1, padx=10, pady=10)
 
 # Set up a variable and option list for the account Combobox
 comics_names = ["Super Dude", "Lizard Man", "Water Woman"]
