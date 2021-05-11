@@ -34,16 +34,19 @@ def sell_comic():
   if comics == "Super Dude":
       if Super_Dude > 0:
         Super_Dude -= 1
+        message_text.set("Super Dude has been Succesfully sold.")
       else:
         pass
   elif comics == "Lizard Man":
       if Lizard_Man > 0:
         Lizard_Man -= 1
+        message_text.set("Lizard Man has been Succesfully sold.")
       else:
         pass
   elif comics == "Water Woman":
       if Water_Woman > 0:
         Water_Woman -= 1
+        message_text.set("Water Woman has been Succesfully sold.")
       else:
         pass
   else:
@@ -82,7 +85,7 @@ message_text.set("")
 
 # Create and pack the message label
 message_label = ttk.Label(top_frame, textvariable=message_text, wraplength="300", justify="center")
-message_label.grid(row=2, column=1, padx=10, pady=10)
+message_label.grid(row=2, column=2, padx=10, pady=10)
 
 # Create the middle frame
 middle_frame = ttk.LabelFrame(root, text="SELLING SECTION")
