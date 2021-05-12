@@ -1,7 +1,8 @@
 from tkinter import *
 from tkinter import ttk
 from functools import partial
-import tkinter.messagebox
+import tkinter
+from tkinter import messagebox
 
 # Create a variable to store the comic balance
 Super_Dude = 8
@@ -15,10 +16,13 @@ def update_balance():
 
   if comics == "Super Dude":
       Super_Dude += int(amount.get())
+      message_text.set("")
   elif comics == "Lizard Man":
       Lizard_Man += int(amount.get())
+      message_text.set("")
   elif comics == "Water Woman":
       Water_Woman += int(amount.get())
+      message_text.set("")
   else:
       pass
   
@@ -27,36 +31,43 @@ def update_balance():
   Comic_details.set(balance_string)
   amount.set("")
 
-def sell_comic():
+def buy_comic():
   global Super_Dude, Lizard_Man, Water_Woman
   comics = account_box.get()
 
   if comics == "Super Dude":
       if Super_Dude > 0:
         Super_Dude -= 1
-        message_text.set("Super Dude has been Succesfully sold.")
+        message_text.set("Super Dude\n has been\n Succesfully sold.")
       else:
-        pass
+        popupmsg("Out of stock!")
   elif comics == "Lizard Man":
       if Lizard_Man > 0:
         Lizard_Man -= 1
-        message_text.set("Lizard Man has been Succesfully sold.")
+        message_text.set("Lizard Man\n has been\n Succesfully sold.")
       else:
-        pass
+        popupmsg("Out of stock!")
   elif comics == "Water Woman":
       if Water_Woman > 0:
         Water_Woman -= 1
-        message_text.set("Water Woman has been Succesfully sold.")
+        message_text.set("Water Woman\n has been\n Succesfully sold.")
       else:
-        pass
+        popupmsg("Out of stock!")
   else:
       pass
   total_balance = Super_Dude + Lizard_Man + Water_Woman
   balance_string = "Super Dude: {}\nLizard Man: {}\nWater Woman: {}\nTotal In Stock: {}".format(Super_Dude, Lizard_Man, Water_Woman, total_balance)
   Comic_details.set(balance_string)
 
+def existing_number_validate(char):
+    if char.isdigit():
+        return True
+    else:
+        return False
+
 def popupmsg(msg):
-  popup = tk.Tk()
+  messagebox.showerror('TITLE', msg)
+
   
 
 #Title of the program
@@ -102,8 +113,8 @@ account_box['values'] = account_names
 account_box.grid(row=2, column=1, padx=10, pady=10, sticky="WE")
 
 # Create a sell button
-sell_button = ttk.Button(middle_frame, text="Sell", command=sell_comic)
-sell_button.grid(row=6, column=0, columnspan=2, padx=10, pady=10)
+buy_button = ttk.Button(middle_frame, text="Buy", command=buy_comic)
+buy_button.grid(row=6, column=0, columnspan=2, padx=10, pady=10)
 
 # Create the bottom frame
 bottom_frame = ttk.LabelFrame(root, text="RESTOCK SECTION")
@@ -128,7 +139,8 @@ amount = DoubleVar()
 amount.set("")
 
 # Create an entry to type in amount
-amount_entry = ttk.Entry(bottom_frame, textvariable=amount)
+amount_entry_command = bottom_frame.register(existing_number_validate)
+amount_entry = ttk.Entry(bottom_frame, textvariable=amount, validate='all', validatecommand=(amount_entry_command, '%S'))
 amount_entry.grid(row=5, column=1, padx=10, pady=3, sticky="WE")
 
 # Create a restock button
