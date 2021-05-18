@@ -1,8 +1,18 @@
+######################### Creating A Starting Loop ###############################
+
+# Importing
 from tkinter import *
 from tkinter import ttk
 from functools import partial
 import tkinter
 from tkinter import messagebox
+
+# Title of the program
+root = Tk()
+root.title("Weeb Comics Store")
+root.configure(bg='black')
+
+############################## Making A Define Function #######################
 
 # Create a variable to store the comic balance
 Super_Dude = 8
@@ -68,24 +78,33 @@ def existing_number_validate(char):
 def popupmsg(msg):
   messagebox.showerror('Out Of Stock!', msg)
 
-#Title of the program
-root = Tk()
-root.title("Weeb Comics Store")
-root.configure(bg='black')
+######################## IMAGE ############################
 
 # Create the PhotoImage and label to hold it
 comic_image = PhotoImage(file="/Students/samuel.hermoso/Desktop/Phyton term 3/unnamed2.png")
 comicimage_label = ttk.Label(root, image=comic_image)
 comicimage_label.grid(row=0, column=0, columnspan=2, padx=5, pady=5)
 
+####################### FRAMES ##############################
+
 # Create the top frame
 top_frame = ttk.LabelFrame(root, text="STOCK LEVELS")
 top_frame.grid(row=1, column=0, padx=10, pady=10, sticky="NSEW")
 
+# Create the middle frame
+middle_frame = ttk.LabelFrame(root, text="SELLING SECTION")
+middle_frame.grid(row=2, column=0, padx=10, pady=10, sticky="NSEW")
+
+# Create the bottom frame
+bottom_frame = ttk.LabelFrame(root, text="RESTOCK SECTION")
+bottom_frame.grid(row=3, column=0, padx=10, pady=10, sticky="NSEW")
+
+####################### LABELS #############################
+
 # Create the Names of the Books
 Comic_details = StringVar()
 Comic_details.set("Super Dude: 8 \nLizard Man: 12\nWater Woman: 3\nTotal In Stock: 23")
-details_label = ttk.Label(top_frame, textvariable=Comic_details, justify="center")
+details_label = ttk.Label(top_frame, textvariable=Comic_details, justify=CENTER)
 details_label.grid(row=2, column=0, columnspan=2, padx=10, pady=10)
 
 # Create and set the message text variable
@@ -93,12 +112,14 @@ message_text = StringVar()
 message_text.set("")
 
 # Create and pack the message label
-message_label = ttk.Label(top_frame, textvariable=message_text, wraplength="300", justify="center")
+message_label = ttk.Label(top_frame, textvariable=message_text, justify=CENTER)
 message_label.grid(row=2, column=2, padx=10, pady=10)
 
-# Create the middle frame
-middle_frame = ttk.LabelFrame(root, text="SELLING SECTION")
-middle_frame.grid(row=2, column=0, padx=10, pady=10, sticky="NSEW")
+# Create a label for the amount field and pack it into the GUI
+amount_label = ttk.Label(bottom_frame, text="Amount:", justify=CENTER)
+amount_label.grid(row=5, column=0, padx=10, pady=3)
+
+######################## COMBOBOX #########################
 
 # Set up a variable and option list for the account Combobox
 account_names = ["Super Dude", "Lizard Man", "Water Woman"]
@@ -106,17 +127,9 @@ chosen_account = StringVar()
 chosen_account.set(account_names[0])
 
 # Create a Combobox to select the account
-account_box = ttk.Combobox(middle_frame, textvariable=chosen_account, state="readonly")
+account_box = ttk.Combobox(middle_frame, textvariable=chosen_account, state="readonly", justify=CENTER)
 account_box['values'] = account_names
 account_box.grid(row=2, column=1, padx=10, pady=10, sticky="WE")
-
-# Create a sell button
-buy_button = ttk.Button(middle_frame, text="Buy", command=buy_comic)
-buy_button.grid(row=6, column=0, columnspan=2, padx=10, pady=10)
-
-# Create the bottom frame
-bottom_frame = ttk.LabelFrame(root, text="RESTOCK SECTION")
-bottom_frame.grid(row=3, column=0, padx=10, pady=10, sticky="NSEW")
 
 # Set up a variable and option list for the account Combobox
 comics_names = ["Super Dude", "Lizard Man", "Water Woman"]
@@ -124,13 +137,21 @@ chosen_comics = StringVar()
 chosen_comics.set(account_names[0])
 
 # Create a Combobox to select the account
-restock_box = ttk.Combobox(bottom_frame, textvariable=chosen_comics, state="readonly")
+restock_box = ttk.Combobox(bottom_frame, textvariable=chosen_comics, state="readonly", justify=CENTER)
 restock_box['values'] = account_names
 restock_box.grid(row=2, column=1, padx=10, sticky="WE")
 
-# Create a label for the amount field and pack it into the GUI
-amount_label = ttk.Label(bottom_frame, text="Amount:")
-amount_label.grid(row=5, column=0, padx=10, pady=3)
+############################ BUTTONS #########################
+
+# Create a sell button
+buy_button = ttk.Button(middle_frame, text="Buy", command=buy_comic)
+buy_button.grid(row=6, column=0, columnspan=2, padx=10, pady=10)
+
+# Create a restock button
+restock_button = ttk.Button(bottom_frame, text="ReStock", command=update_balance)
+restock_button.grid(row=6, column=1, columnspan=2, padx=10, pady=10)
+
+########################## ENTRY #############################
 
 # Create a variable to store the amount
 amount = DoubleVar()
@@ -138,12 +159,8 @@ amount.set("")
 
 # Create an entry to type in amount
 amount_entry_command = bottom_frame.register(existing_number_validate)
-amount_entry = ttk.Entry(bottom_frame, textvariable=amount, validate='all', validatecommand=(amount_entry_command, '%S'))
+amount_entry = ttk.Entry(bottom_frame, textvariable=amount, justify=CENTER, validate='all', validatecommand=(amount_entry_command, '%S'))
 amount_entry.grid(row=5, column=1, padx=10, pady=3, sticky="WE")
 
-# Create a restock button
-restock_button = ttk.Button(bottom_frame, text="ReStock", command=update_balance)
-restock_button.grid(row=6, column=1, columnspan=2, padx=10, pady=10)
-
-# Run the mainloop
+############################ Run the Mainloop ########################
 root.mainloop()
