@@ -40,19 +40,19 @@ def buy_comic():
         Super_Dude -= 1
         message_text.set("Super Dude\n has been\n Succesfully sold.")
       else:
-        popupmsg("Out of stock!")
+        popupmsg("Super Dude is\n Out of stock!")
   elif comics == "Lizard Man":
       if Lizard_Man > 0:
         Lizard_Man -= 1
         message_text.set("Lizard Man\n has been\n Succesfully sold.")
       else:
-        popupmsg("Out of stock!")
+        popupmsg("Lizard Man is\n Out of stock!")
   elif comics == "Water Woman":
       if Water_Woman > 0:
         Water_Woman -= 1
         message_text.set("Water Woman\n has been\n Succesfully sold.")
       else:
-        popupmsg("Out of stock!")
+        popupmsg("Water Woman is\n Out of stock!")
   else:
       pass
   total_balance = Super_Dude + Lizard_Man + Water_Woman
@@ -66,9 +66,7 @@ def existing_number_validate(char):
         return False
 
 def popupmsg(msg):
-  messagebox.showerror('TITLE', msg)
-
-  
+  messagebox.showerror('Out Of Stock!', msg)
 
 #Title of the program
 root = Tk()
