@@ -214,8 +214,6 @@ amount_entry_command = bottom_frame.register(existing_number_validate)
 amount_entry = ttk.Entry(bottom_frame, textvariable=amount, justify=CENTER, validate='all', validatecommand=(amount_entry_command, '%S'))
 amount_entry.grid(row=5, column=1, padx=10, pady=3, sticky="WE")
 amount_entry.bind("<KeyRelease>", button_on)
-#amount_entry.bind("<BackSpace>", button_on)
-
 
 ############################ Run the Mainloop ########################
 root.mainloop()
