@@ -161,6 +161,12 @@ message_label.grid(row=2, column=2, padx=10, pady=10)
 amount_label = ttk.Label(bottom_frame, text="Amount:", justify=CENTER, font=("Times New Roman", 12, 'normal', 'roman'))
 amount_label.grid(row=5, column=0, padx=10, pady=3)
 
+# Copyright Display
+copy_right = Label(root, text="© Samuel Hermoso", fg="#0046d5")
+copy_right.config(font = ("Candara", 10), justify=LEFT)
+copy_right.grid(row=4, column=0)
+
+
 ######################## COMBOBOX #########################
 
 # Set up a variable and option list for the account Combobox
