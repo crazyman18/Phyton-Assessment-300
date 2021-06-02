@@ -65,21 +65,21 @@ def sell_comic():
   for comic in comicsbalance_list:
     if account_box.get() == comic.name:
       comicvar = comic
-      break
-  if 1 <= comicvar.stock:
-    comicvar.stock -=1
-    message_text_total += 1
-    message_text.set("{} Comic\n has been sold\n Succesfully".format(comic.name))
-    message_text_list = ""
-    for comic in comicsbalance_list:
-      message_text_list += (comic.name + " - " + str(comic.stock) + "\n")
-    Comic_details.set(message_text_list + "----------\nTotal Comics Sold:{}".format(message_text_total))
-    update_thestock()
-    return True
-  else:
-    popupmsg("Out of stock!")
-    return False
-  
+      if 1 <= comicvar.stock:
+        comicvar.stock -=1
+        message_text_total += 1
+        message_text.set("{} Comic\n has been sold\n Succesfully".format(comic.name))
+        message_text_list = ""
+        for comic in comicsbalance_list:
+          message_text_list += (comic.name + " - " + str(comic.stock) + "\n")
+        Comic_details.set(message_text_list + "----------\nTotal Comics Sold:{}".format(message_text_total))
+        update_thestock()
+        chosen_account.set('')
+        return
+      else:
+        popupmsg("Out of stock!")
+        return
+  popupmsg("Choose a Comic!")
   
 # Create a function that will update the balance.
 def restock_comic():
@@ -88,13 +88,17 @@ def restock_comic():
     if chosen_comics.get() == comic.name:
       comic.stock += int(amount.get())
       message_text.set("{} * {} Comic\n has been restocked\n Succesfully".format(int(amount.get()), comic.name))
-  message_text_list = ""
-  for comic in comicsbalance_list:
-      message_text_list += (comic.name + " - " + str(comic.stock) + "\n")
-  Comic_details.set(message_text_list + "----------\nTotal Comics Sold:{}".format(message_text_total))
-  update_thestock()
+      message_text_list = ""
+      for comic in comicsbalance_list:
+        message_text_list += (comic.name + " - " + str(comic.stock) + "\n")
+      Comic_details.set(message_text_list + "----------\nTotal Comics Sold:{}".format(message_text_total))
+      update_thestock()
+      amount_entry.delete(0, END)
+      restock_button.config(state='disabled')
+      chosen_account.set('')
+      return
+  popupmsg("Select a Comic!")
   amount_entry.delete(0, END)
-  restock_button.config(state='disabled')
 
 # Entry Error
 def existing_number_validate(char):
@@ -118,6 +122,23 @@ def button_on(event):
       else:
         restock_button.config(state='disabled')
         break
+
+def return_pressed(event):
+  if (restock_button['state'] == tk.DISABLED):
+    button_on(event)
+  else:
+    restock_comic()
+root.bind('<Return>', return_pressed)
+
+def space_pressed(event):
+  amount_entry.focus()
+root.bind('<space>', space_pressed)
+
+def no_tab(event):
+  amount_entry.focus()
+  return 'break'
+root.bind('<Tab>', no_tab)
+root.unbind_all("<Tab>")
       
 ######################## IMAGE ############################
 
@@ -172,7 +193,7 @@ copy_right.grid(row=4, column=0)
 # Set up a variable and option list for the account Combobox
 account_names = ["Super Dude", "Lizard Man", "Water Woman"]
 chosen_account = StringVar()
-chosen_account.set(account_names[0])
+chosen_account.set('')
 
 # Create a Combobox to select the account
 account_box = ttk.Combobox(middle_frame, textvariable=chosen_account, state="readonly", justify=CENTER, font=("Verdana", 10, 'bold', 'roman'))
@@ -182,7 +203,7 @@ account_box.grid(row=2, column=1, padx=10, pady=10, sticky="WE")
 # Set up a variable and option list for the account Combobox
 comics_names = ["Super Dude", "Lizard Man", "Water Woman"]
 chosen_comics = StringVar()
-chosen_comics.set(account_names[0])
+chosen_comics.set('')
 
 # Create a Combobox to select the account
 restock_box = ttk.Combobox(bottom_frame, textvariable=chosen_comics, state="readonly", justify=CENTER, font=("Verdana", 10, 'bold', 'roman'))
@@ -211,7 +232,7 @@ amount.set("")
 
 # Create an entry to type in amount
 amount_entry_command = bottom_frame.register(existing_number_validate)
-amount_entry = ttk.Entry(bottom_frame, textvariable=amount, justify=CENTER, validate='all', validatecommand=(amount_entry_command, '%S'))
+amount_entry = ttk.Entry(bottom_frame, textvariable=amount, show="*", justify=CENTER, validate='all', validatecommand=(amount_entry_command, '%S'))
 amount_entry.grid(row=5, column=1, padx=10, pady=3, sticky="WE")
 amount_entry.bind("<KeyRelease>", button_on)
 
