@@ -102,7 +102,9 @@ def restock_comic():
 
 # Entry Error
 def existing_number_validate(char):
-    if char.isdigit():
+    if char == "0" and amount_entry.get() == "":
+      return False
+    elif char.isdigit():
         return True
     else:
         return False
