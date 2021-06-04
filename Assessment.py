@@ -99,6 +99,7 @@ def restock_comic():
       return
   popupmsg("Select a Comic!")
   amount_entry.delete(0, END)
+  button_on("")
 
 # Entry Error
 def existing_number_validate(char):
@@ -234,7 +235,7 @@ amount.set("")
 
 # Create an entry to type in amount
 amount_entry_command = bottom_frame.register(existing_number_validate)
-amount_entry = ttk.Entry(bottom_frame, textvariable=amount, show="*", justify=CENTER, validate='all', validatecommand=(amount_entry_command, '%S'))
+amount_entry = ttk.Entry(bottom_frame, textvariable=amount, justify=CENTER, validate='all', validatecommand=(amount_entry_command, '%S'))
 amount_entry.grid(row=5, column=1, padx=10, pady=3, sticky="WE")
 amount_entry.bind("<KeyRelease>", button_on)
 
